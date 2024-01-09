@@ -1,25 +1,36 @@
-import React, { useState } from 'react'
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom';
 import JoinedRoom from '../components/JoinedRoom';
 import UnjoinedRoom from '../components/UnjoinedRoom';
+import { getRoom } from '../api/rooms';
+import { useLoading } from '../contexts/LoadingContext';
 
 const UserRoom = () => {
   const {roomId} = useParams();
-  const [response, setResponse] = useState({
-    access: false,
-    room: {
-      name: 'Default',
-      _id: '3',
-      admin: {_id: '1', nickname: 'John Wick'},
-      participants: [{_id: '2', nickname: 'Hugh Lori'}]
-    }
-  })
+  const [response, setResponse] = useState(null);
+
+  const {toggleLoading} = useLoading();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    toggleLoading();
+    getRoom(roomId).then(rsp => {
+      setResponse(rsp);
+    }).catch(err => {
+      console.log(err);
+      navigate('/not-found', {replace: true});
+    }).finally(() => {
+      toggleLoading();
+    })
+  }, [roomId, toggleLoading, navigate]);
 
   return (<>
-    {response.access
-      ?<JoinedRoom />
+  {response
+    ?(response.access
+      ?<JoinedRoom privateRoom={response.room.private} name={response.room.name} admin={response.room.admin} participants={response.room.participants} messages={response.messages} />
       :<UnjoinedRoom name={response.room.name} admin={response.room.admin} participants={response.room.participants} />
-    }
+    )
+    :null}
     </>)
 }
 

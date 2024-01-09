@@ -1,8 +1,9 @@
 import axios from 'axios';
-import { getToken, setToken, removeToken, removeUser } from '../services/localStorage';
+import { getToken, setToken, removeToken, removeUser, clearStorage } from '../services/localStorage';
 
 const instance = axios.create({
-  baseURL: process.env.SERVER_URL,
+  baseURL: process.env.REACT_APP_SERVER_URL,
+  withCredentials: true,
   headers: {
     'Content-Type': 'multipart/form-data'
   }
@@ -34,7 +35,8 @@ instance.interceptors.response.use((response) => {
         setToken(rs.data.token);
         return instance(originalConfig);
       } catch(_error) {
-        removeUser();
+        clearStorage();
+        window.location.href = '/login';
         return Promise.reject(_error);
       }
     }

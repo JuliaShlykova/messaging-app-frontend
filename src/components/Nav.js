@@ -1,30 +1,31 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
-import { clearStorage } from '../services/localStorage';
+import { Link, useNavigate } from 'react-router-dom'
+import { clearStorage, getUser } from '../services/localStorage';
 import { signout } from '../api/auth';
+import Avatar from './Avatar';
+
 
 const Nav = ({toggleShowNav}) => {
-  const navigator = useNavigate();
-
-  const logout = async() => {
-    // await signout();
-    clearStorage();
-    navigator('/login');
-  }
-
 
   return (
     <div className="nav-container" onClick={() => {toggleShowNav()}}>
       <nav onClick={(e)=> {e.stopPropagation()}}>
         <ul>
           <li>
-            <a href="/">nickname</a>
+            <Link onClick={() => {toggleShowNav()}} to={"/users/"+getUser().nickname}>
+            <div className="avatar-container">
+              {getUser().profileImgUrl
+              ?<img src={getUser().profileImgUrl} alt='' />
+              :<Avatar name={getUser().nickname} />}
+            </div>
+            <p>{getUser().nickname}</p>
+            </Link>
           </li>
           <li>
-            <button>create new chat</button>
+          <Link onClick={() => {toggleShowNav()}} to={"/create-room"}>Create Room</Link>
           </li>
           <li>
-            <button onClick={logout}>log out</button>
+            <button onClick={signout}>Log Out</button>
           </li>
         </ul>
       </nav>

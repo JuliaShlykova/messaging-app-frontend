@@ -1,8 +1,17 @@
 import axios from 'axios';
-import { getToken, setToken, removeToken, removeUser } from '../services/localStorage';
+import { getToken, setToken, removeToken, removeUser, clearStorage } from '../services/localStorage';
 
 const instance = axios.create({
-  baseURL: process.env.SERVER_URL,
+  baseURL: process.env.REACT_APP_SERVER_URL,
+  withCredentials: true,
+  headers: {
+    'Content-Type': 'application/json'
+  }
+});
+
+const instanceWithoutAccessToken = axios.create({
+  baseURL: process.env.REACT_APP_SERVER_URL,
+  withCredentials: true,
   headers: {
     'Content-Type': 'application/json'
   }
@@ -17,6 +26,7 @@ instance.interceptors.request.use((config) => {
   }
   return config;
   }, (error) => {
+    console.log('error in request: ', error);
     return Promise.reject(error);
   }
 );
@@ -25,20 +35,27 @@ instance.interceptors.response.use((response) => {
     return response;
   }, async (err) => {
     const originalConfig = err.config;
-    if (err.response.status === 401 && !originalConfig._retry) {
+    if (err.response?.status === 401 && !originalConfig._retry) {
       originalConfig._retry = true;
       removeToken();
 
       try {
-        const rs = await instance.post('/auth/refresh');
+        const rs = await instanceWithoutAccessToken.post('/auth/refresh', {});
         setToken(rs.data.token);
         return instance(originalConfig);
       } catch(_error) {
-        removeUser();
+        clearStorage();
+        window.location.href = '/login';
         return Promise.reject(_error);
       }
     }
-    return Promise.reject(err);
+    if (err.message === 'Network Error') {
+      clearStorage();
+      window.location.href = '/server-error';
+      
+    } else {
+      return Promise.reject(err);
+    }
   }
 );
 

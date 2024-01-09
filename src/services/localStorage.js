@@ -1,16 +1,3 @@
-
-
-export const isTokenValid = () => {
-  try {
-    const token = getToken();
-    if (!token) return false;
-    // const decoded = jwt_decode(token);  // Using jwt-decode library
-    // return decoded.exp > Date.now() / 1000;
-  } catch (error) {
-    return false;
-  }
-};
-
 export const removeToken = () => {
   sessionStorage.removeItem('token');
 }
@@ -28,9 +15,10 @@ export const clearStorage = () => {
 }
 
 export const setUser = (value) => {
-  sessionStorage.set('userId', value);
+  sessionStorage.setItem('user', JSON.stringify(value));
+
 }
 
 export const getUser = () => {
-  return sessionStorage.getItem('userId');
+  return JSON.parse(sessionStorage.getItem('user'));
 }

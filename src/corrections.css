@@ -34,3 +34,8 @@ img {
 input, textarea {
   color: inherit;
 }
+
+p {
+  padding: 0;
+  margin: 0;
+}
