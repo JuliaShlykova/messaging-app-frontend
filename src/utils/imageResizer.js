@@ -4,7 +4,7 @@ const compress = new Compress();
 
 const compressedImg = async (file) => {
   const resizedImage = await compress.compress([file], {
-    size: 2, // the max size in MB, defaults to 2MB
+    size: 1, // the max size in MB, defaults to 2MB
     quality: 1, // the quality of the image, max is 1,
     maxWidth: 600, // the max width of the output image, defaults to 1920px
     maxHeight: 900, // the max height of the output image, defaults to 1920px

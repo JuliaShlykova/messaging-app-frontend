@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getToken, setToken, removeToken, removeUser, clearStorage } from '../services/localStorage';
+import { getToken, setToken, removeToken, clearStorage } from '../services/localStorage';
 
 const instance = axios.create({
   baseURL: process.env.REACT_APP_SERVER_URL,
@@ -38,7 +38,6 @@ instance.interceptors.response.use((response) => {
     if (err.response?.status === 401 && !originalConfig._retry) {
       originalConfig._retry = true;
       removeToken();
-
       try {
         const rs = await instanceWithoutAccessToken.post('/auth/refresh', {});
         setToken(rs.data.token);
@@ -51,8 +50,9 @@ instance.interceptors.response.use((response) => {
     }
     if (err.message === 'Network Error') {
       clearStorage();
-      window.location.href = '/server-error';
-      
+      window.location.href = '/server-error'
+    } else if(err.message === 'Request failed with status code 429') {
+      window.location.href = '/too-many-requests';
     } else {
       return Promise.reject(err);
     }

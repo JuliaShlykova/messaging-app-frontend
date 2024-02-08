@@ -11,6 +11,6 @@ const JSONFromForm = (fD) => {
     obj[key].push(value);
   });
   return JSON.stringify(obj);
-}
+};
 
 export default JSONFromForm;
