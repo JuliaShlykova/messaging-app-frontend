@@ -2,6 +2,7 @@ import React, { useEffect, useReducer, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import { signup } from '../api/auth';
+import Loading from '../components/Loading';
 
 const Signup = () => {
   const [nickname,  setNickname] = useState('');
@@ -10,6 +11,7 @@ const Signup = () => {
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [typePassword, toggleType] = useReducer(type=>type==='password'?'text':'password', 'password');
   const [errors, setErrors] = useState([]);
+  const [loading, toggleLoading] = useReducer(c=>!c, false);
 
   const navigate = useNavigate();
 
@@ -24,6 +26,7 @@ const Signup = () => {
   const submitForm = async(e) => {
     e.preventDefault();
     if (password === passwordConfirm) {
+      toggleLoading();
       setErrors([]);
       try {
         await signup({
@@ -41,11 +44,14 @@ const Signup = () => {
           setErrors(err.response.data.errors);
         }
         console.log(err);
+      } finally {
+        toggleLoading();
       }
     }
   };
 
   return (
+    <>
     <div className="login-route-container">
       <div className='logo'>messageMe</div>
       <div className="login-form">
@@ -79,6 +85,10 @@ const Signup = () => {
         <p>Already have an account? <Link to='/login'> Log in</Link> </p>
         </div>
     </div>
+    {loading
+    ?<Loading />
+    :null}
+    </>
   )
 };
 

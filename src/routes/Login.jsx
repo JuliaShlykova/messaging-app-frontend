@@ -2,10 +2,12 @@ import React, { useReducer, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import { login } from '../api/auth';
+import Loading from '../components/Loading';
 
 const Login = () => {
   const [typePassword, toggleType] = useReducer(type=>type==='password'?'text':'password', 'password');
   const [errors, setErrors] = useState([]);
+  const [loading, toggleLoading] = useReducer(c=>!c, false);
 
   const navigate = useNavigate();
 
@@ -30,6 +32,7 @@ const Login = () => {
 
   const examplelogin = async(e) => {
     e.preventDefault();
+    toggleLoading();
     try {
       await login({
         email: 'john_smith@test.com',
@@ -41,10 +44,13 @@ const Login = () => {
         return navigate('/server-error');
       }
       console.log(err);
+    } finally {
+      toggleLoading();
     }
   };
 
   return (
+    <>
     <div className='login-route-container'>
       <div className='logo'>messageMe</div>
       <div className="login-form">
@@ -78,6 +84,10 @@ const Login = () => {
           </button>
       </div>
     </div>
+    {loading
+    ?<Loading />
+    :null}
+    </>
   )
 };
 
