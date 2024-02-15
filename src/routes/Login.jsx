@@ -13,6 +13,7 @@ const Login = () => {
 
   const submitForm = async(e) => {
     e.preventDefault();
+    toggleLoading();
     setErrors([]);
     try {
       const form = e.target;
@@ -27,6 +28,8 @@ const Login = () => {
         setErrors(err.response.data.errors);
       }
       console.log(err);
+    } finally {
+      toggleLoading();
     }
   };
 
