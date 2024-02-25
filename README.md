@@ -1,5 +1,5 @@
 # Messaging app (MessageMe) (client segment)
-To see the website visit [MessageMe](https://in-tune-frontend.vercel.app/)
+To see the website visit [MessageMe](https://messaging-app-frontend-two.vercel.app/)
 ## Description
 This project is the part of the [TOP project: Messaging app](https://www.theodinproject.com/lessons/nodejs-messaging-app). This part represents frontend for [server segment](https://github.com/JuliaShlykova/messaging-app-backend).
 ## References
