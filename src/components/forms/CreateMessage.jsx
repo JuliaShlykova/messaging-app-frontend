@@ -14,7 +14,7 @@ const CreateMessage = ({setMessages}) => {
     if (errors.length) setErrors([]);
     try {
       const response = await sendMessage(roomId, newMessage);
-      const messageWithInfo = {...response.message, author: {nickname: getUser().nickname, _id: getUser().id}};
+      const messageWithInfo = {...response.message, author: {nickname: getUser().nickname, _id: getUser().id, profileImgUrl: getUser().profileImgUrl}};
       socket.send(messageWithInfo);
       setMessages(oldMessages=>[...oldMessages, messageWithInfo]);
       setNewMessage('');
