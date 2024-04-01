@@ -35,7 +35,7 @@ const RenameUser = ({setNickname, nickname, toggleShowRename}) => {
       <div className="form-block" onMouseDown={e=>{e.stopPropagation();}}>
       <form onSubmit={submitForm}>
         <label htmlFor="name">New nickname: (maximum length is 100 chars)</label>
-        <input type="text" id='name' value={name} onChange={e=>{setName(e.target.value)}} required maxLength={40}/>
+        <input type="text" id='name' value={name} onChange={e=>{setName(e.target.value)}} pattern='\w+' required maxLength={40}/>
         {errors.length
           ?<div className="errors">
             {errors.map((err, i) => {

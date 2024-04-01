@@ -60,7 +60,7 @@ const Signup = () => {
           <label htmlFor="email">Email (required): </label>
           <input type="email" id="email" value={email} placeholder='john@smith.com' onChange={(e) => {setEmail(e.target.value)}} maxLength={254} required/>
           <label htmlFor="nickname">Nickname (required): </label>
-          <input type="text" id="nickname" value={nickname} placeholder='john_smith' onChange={(e) => {setNickname(e.target.value)}} maxLength={40} required/>
+          <input type="text" id="nickname" value={nickname} placeholder='john_smith' onChange={(e) => {setNickname(e.target.value)}} pattern='\w+' maxLength={40} required/>
           <label htmlFor="password">Password (required): </label>
           <div className="password-container">
               <input type={typePassword} id="password" value={password} onChange={(e) => {setPassword(e.target.value)}} minLength={8} required/>
