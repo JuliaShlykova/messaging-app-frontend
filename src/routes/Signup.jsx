@@ -59,8 +59,10 @@ const Signup = () => {
         <form onSubmit={submitForm}>
           <label htmlFor="email">Email (required): </label>
           <input type="email" id="email" value={email} placeholder='john@smith.com' onChange={(e) => {setEmail(e.target.value)}} maxLength={254} required/>
-          <label htmlFor="nickname">Nickname (required): </label>
-          <input type="text" id="nickname" value={nickname} placeholder='john_smith' onChange={(e) => {setNickname(e.target.value)}} pattern='\w+' maxLength={40} required/>
+          <label htmlFor="nickname">Nickname (required): 
+          <p style={{fontStyle: 'italic', margin: 0, fontSize: '0.8rem'}}>*Only letters, numbers, '_' and '-' are allowed</p>
+          </label>
+          <input type="text" id="nickname" value={nickname} placeholder='john_smith' onChange={(e) => {setNickname(e.target.value)}} pattern='[\w\-]+' maxLength={40} required/>
           <label htmlFor="password">Password (required): </label>
           <div className="password-container">
               <input type={typePassword} id="password" value={password} onChange={(e) => {setPassword(e.target.value)}} minLength={8} required/>
