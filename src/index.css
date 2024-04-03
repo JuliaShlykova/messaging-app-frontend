@@ -476,6 +476,7 @@ main {
   max-width: 30vw;
   min-width: 150px;
   margin-bottom: 3px;
+  overflow-wrap: anywhere;
 }
 
 .userMsg {
