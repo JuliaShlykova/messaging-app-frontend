@@ -2,14 +2,7 @@ import React, { useMemo } from 'react';
 import randomColor from '../utils/randomColor';
 
 const Avatar = ({name}) => {
-
-  const sArr = name.split(/\s+/);
-  let str;
-  if (sArr.length>1) {
-    str = (sArr[0][0]+sArr[1][0]).toUpperCase()
-  } else {
-    str = sArr[0][0].toUpperCase()
-  }
+  let str = name[0].toUpperCase();
 
   const randcolor = useMemo(randomColor,[]);
 
