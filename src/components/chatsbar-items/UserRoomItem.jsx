@@ -1,8 +1,9 @@
 import React, { memo } from 'react';
 import { NavLink } from 'react-router-dom';
 import Avatar from '../Avatar';
+import transforDateToLocal from '../../utils/transformDateToLocal';
 
-const UserRoomItem = memo(({roomId, roomImgUrl, name, lastMessage}) => {
+const UserRoomItem = memo(({roomId, roomImgUrl, name, createdAt, lastMessage}) => {
 
   return (
     <NavLink to={'/rooms/' + roomId} className='user-room-in-menu'>
@@ -13,7 +14,7 @@ const UserRoomItem = memo(({roomId, roomImgUrl, name, lastMessage}) => {
     </div>
       <div>
         <span className='room-name'>{name}</span>
-        <span className='last-msg'>{lastMessage}</span>
+        <span className='last-msg'>{lastMessage?lastMessage:(`created at ${transforDateToLocal(createdAt)}`)}</span>
       </div>
     </NavLink>
   )

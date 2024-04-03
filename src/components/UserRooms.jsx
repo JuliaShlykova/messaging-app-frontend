@@ -10,6 +10,7 @@ const UserRooms = ({rooms=[]}) => {
           roomId={room._id}
           roomImgUrl={room.roomImgUrl}
           name={room.name}
+          createdAt={room.createdAt}
           lastMessage={room.lastMessage}
         />)}
     </>
