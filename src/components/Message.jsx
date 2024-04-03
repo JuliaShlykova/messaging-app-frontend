@@ -1,6 +1,7 @@
 import React, { memo } from 'react';
 import { getUser } from '../services/localStorage';
 import { NavLink } from 'react-router-dom';
+import transforDateToLocal from '../utils/transformDateToLocal';
 
 const initials = (name) => {
   const sArr = name.split(/\s+/);
@@ -20,7 +21,7 @@ const Message = memo(({text, author, msgDate}) => {
     getUser().nickname===author.nickname
     ?(<div className="userMsg">
           <p>{text}</p>
-          <p>{msgDate}</p>
+          <p>{transforDateToLocal(msgDate)}</p>
       </div>)
     :(<div className="compMsg">
         <NavLink to={'/users/'+author.nickname} className="avatar-container">

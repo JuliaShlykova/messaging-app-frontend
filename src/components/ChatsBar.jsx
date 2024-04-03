@@ -12,6 +12,7 @@ import sortedArr from '../utils/sortedDateArr';
 import socket from '../socket';
 import { getUser } from '../services/localStorage';
 import updatedUsers from '../utils/updatingOnlineUsers';
+import transforDateToLocal from '../utils/transformDateToLocal';
 
 const re = /\/([\w-]+)\//;
 let curUrl = window.location.pathname.match(re)?window.location.pathname.match(re)[1]:'';
@@ -131,14 +132,14 @@ const ChatsBar = ({users, setUsers}) => {
           {...room, 
             name: partnerInfo.nickname, 
             roomImgUrl: partnerInfo.profileImgUrl, 
-            lastMessage: `created at ${room.formatted_timestamp}`, 
+            lastMessage: `created at ${transforDateToLocal(room.formatted_timestamp)}`, 
             lastTimestamp: room.createdAt
           },
           ...rooms]);
       } else if (getUser().id===room.admin||room.participants.includes(getUser().id)) {
         setRooms(rooms => [
           {...room, 
-            lastMessage: `created at ${room.formatted_timestamp}`, 
+            lastMessage: `created at ${transforDateToLocal(room.formatted_timestamp)}`, 
             lastTimestamp: room.createdAt
           }, 
           ...rooms
