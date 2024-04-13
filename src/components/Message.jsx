@@ -27,7 +27,7 @@ const Message = memo(({text, author, msgDate}) => {
           <NavLink className='comp-user-name' to={'/users/'+author.nickname}>{author.nickname}</NavLink>
           <div className="msg-box">
             <p>{text}</p>
-            <p>{msgDate}</p>
+            <p>{transforDateToLocal(msgDate)}</p>
           </div>
         </div>
     </div>)
